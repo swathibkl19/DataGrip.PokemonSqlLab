@@ -75,22 +75,16 @@ How many pokemon at level 100 does each trainer with at least one level 100 poke
 (Hint: your query should not display a trainer
  */
 
-select count(*) from pokemon.pokemon_trainer where pokemon_trainer.pokelevel >= 100;
+select count(*) from pokemon.pokemon_trainer where pokemon_trainer.pokelevel >= 100
+group by trainerID;
 
 /*
 How many pokemon only belong to one trainer and no other?
  */
 
-select   count( distinct trainerID ) from pokemon.pokemon_trainer;
 
-select   count( distinct trainerID) from pokemon.pokemon_trainer;
-
-select  count(*)  from pokemon.pokemon_trainer;
-
-
-
-select A.trainerID,B.pokemon_id from pokemon.pokemon_trainer A, pokemon.pokemon_trainer B
-where A.trainerID<> B.pokemon_id;
+select count(*)  as one_Trainer FROM (
+  SELECT pokemon_id FROM pokemon.pokemon_trainer GROUP BY pokemon_id HAVING count(*) = 1) pokeman_trainer;
 
 /*
 Sort the data by finding out which trainer has the strongest pokemon so that this will act as a ranking of strongest
